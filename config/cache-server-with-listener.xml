@@ -5,6 +5,21 @@
 	version="1.0" 
 	lock-lease="120" lock-timeout="60" search-timeout="300" is-server="true" copy-on-read="false">
 
+	<cache-transaction-manager>
+		<transaction-listener>
+			<class-name>com.cviz.geode.cache.listener.CvizGeodeCompactTransactionListener</class-name>
+		</transaction-listener>
+		<transaction-writer>
+			<class-name>com.cviz.geode.cache.listener.CvizGeodeCompactTransactionCacheWriter</class-name>
+		</transaction-writer>
+	</cache-transaction-manager>
+
+	<async-event-queue id="cvizAsyncQueue" persistent="true" disk-store-name="queuestore">
+      	<async-event-listener>
+         	<class-name>com.cviz.geode.cache.listener.CvizGeodeCompactAsyncEventListener</class-name>
+      	</async-event-listener>
+    </async-event-queue>
+
 	<cache-server port="40404"/>
 	
 	<disk-store name="regionstore" compaction-threshold="50"
@@ -22,6 +37,12 @@
 		</disk-dirs>
 	</disk-store>
 
+	<disk-store name="queuestore" compaction-threshold="50"
+		auto-compact="true" allow-force-compaction="false" queue-size="10" time-interval="1000" write-buffer-size="32768">
+		<disk-dirs>
+			<disk-dir>/app/gfdb/diskstore/queuestore</disk-dir>
+		</disk-dirs>
+	</disk-store>
 
 	<pdx read-serialized="false" persistent="true" disk-store-name="pdxstore">
 		<pdx-serializer>
@@ -38,7 +59,11 @@
 	</pdx>
 
 	<region name="alert">
-		<region-attributes refid="REPLICATE_PERSISTENT" statistics-enabled="true"  disk-store-name="regionstore" disk-synchronous="false"/>
+		<region-attributes refid="REPLICATE_PERSISTENT" statistics-enabled="true"  disk-store-name="regionstore" disk-synchronous="false" async-event-queue-ids="cvizAsyncQueue">
+			<cache-writer>
+				<class-name>com.cviz.geode.cache.listener.CvizGeodeCompactCacheWriter</class-name>
+			</cache-writer>
+		</region-attributes>
 	</region>
 
 	<region name="preprocrule">
