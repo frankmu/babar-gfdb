@@ -6,4 +6,4 @@ export CLASSPATH=$GF_HOME/lib/*:$GF_LIB/*
 export PATH=$GF_HOME/bin:$PATH
 export JAVA_ARGS="-Dgfsh.log-level=info -Dgfsh.log-dir=$GFDB_HOME/logs"
 
-gfsh start server --name=gfserver --properties-file=/app/gfdb/config/gemfire.properties --dir=/app/gfdb/gfserver --classpath=/app/gfdb/ --J=-Dgemfire.ALLOW_PERSISTENT_TRANSACTIONS=true
+gfsh start server --name=gfserver --properties-file=/app/gfdb/config/gemfire.properties --dir=/app/gfdb/gfserver --classpath=/app/gfdb/lib/* --J=-Dgemfire.ALLOW_PERSISTENT_TRANSACTIONS=true

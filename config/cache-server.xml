@@ -41,6 +41,10 @@
 		<region-attributes refid="REPLICATE_PERSISTENT" statistics-enabled="true"  disk-store-name="regionstore" disk-synchronous="false"/>
 	</region>
 
+	<region name="alerthistory">
+		<region-attributes refid="REPLICATE_PERSISTENT" statistics-enabled="true"  disk-store-name="regionstore" disk-synchronous="false"/>
+	</region>
+
 	<region name="preprocrule">
 		<region-attributes refid="REPLICATE_PERSISTENT" statistics-enabled="true"  disk-store-name="regionstore" disk-synchronous="false"/>
 	</region>
